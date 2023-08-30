@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #2980b9, #8e44ad, #2691d9);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 400px;
+            background: #E6E6FA;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        label {
+            display: inline-block;
+            width: 140px;
+            margin: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background: #45a049;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        a {
+            color: #333;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .message {
+            text-align: center;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .message {
+          padding: 10px;
+          margin-bottom: 10px;
+          border-radius: 4px;
+        }
+
+        .success {
+          background-color: #C8E6C9;
+          color: #2E7D32;
+        }
+
+        .error {
+          background-color: #FFCDD2;
+          color: #D32F2F;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Enter your username" required><br>
+
+            <label>Password</label>
+            <input type="password" name="password" placeholder="Enter your password" required><br>
+
+            <input type="submit" value="Login">
+
+            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+            {% if login_messages %}
+                {% for message in login_messages %}
+                    <div class="message {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                var errorMessage = document.querySelector(".message.error");
+                if (errorMessage) {
+                    errorMessage.style.display = "none";
+                }
+            }, 2000); // 2-second delay
+        });
+    </script>
+
+</body>
+</html>
